@@ -28,6 +28,7 @@ import nl.marijnvdwerf.scheduleview.widget.ScheduleAdapter.ScheduleEvent;
 public class ScheduleView extends AdapterView<ScheduleAdapter> {
 
     private static int PADDING = 24;
+    private int mVerticalSpacing = 0;
     private int mHorizontalSpacing = 0;
     private DateTime mDate = DateTime.now();
 
@@ -48,6 +49,7 @@ public class ScheduleView extends AdapterView<ScheduleAdapter> {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ScheduleView, defStyle, 0);
 
+        mVerticalSpacing = a.getDimensionPixelOffset(R.styleable.ScheduleView_verticalSpacing, 0);
         mHorizontalSpacing = a.getDimensionPixelOffset(R.styleable.ScheduleView_horizontalSpacing, 0);
 
         setBackgroundColor(Color.TRANSPARENT);
@@ -229,8 +231,15 @@ public class ScheduleView extends AdapterView<ScheduleAdapter> {
 
     protected Rect getEventRect(ScheduleEvent event) {
         Rect r = new Rect();
+
+        float verticalSpacing = ((float) mVerticalSpacing) / 2f;
+        // apply half of the spacing to the top
         r.top = getVerticalPosition(event.getStartDateTime());
+        r.top += Math.ceil(verticalSpacing);
+        // apply the other half of the spacing to the bottom
         r.bottom = getVerticalPosition(event.getEndDateTime());
+        r.bottom -= Math.floor(verticalSpacing);
+
 
         int paddingLeft = Math.round(getResources().getDisplayMetrics().scaledDensity * 64f);
         int paddingRight = Math.round(getResources().getDisplayMetrics().scaledDensity * 16f);
@@ -240,15 +249,15 @@ public class ScheduleView extends AdapterView<ScheduleAdapter> {
         r.left = paddingLeft + (colWidth * position.column);
         r.right = r.left + colWidth;
 
-        float spacing = ((float) mHorizontalSpacing) / 2f;
+        float horizontalSpacing = ((float) mHorizontalSpacing) / 2f;
 
         if (position.column > 0) {
             // apply half of the spacing to the left;
-            r.left += Math.floor(spacing);
+            r.left += Math.floor(horizontalSpacing);
         }
         if (position.column < position.totalColumnCount) {
             // apply half of the spacing to the right;
-            r.right -= Math.ceil(spacing);
+            r.right -= Math.ceil(horizontalSpacing);
         }
 
         return r;

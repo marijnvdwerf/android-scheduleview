@@ -2,5 +2,6 @@
 <resources>
     <declare-styleable name="ScheduleView">
         <attr name="horizontalSpacing" format="dimension"/>
+        <attr name="verticalSpacing" format="dimension"/>
     </declare-styleable>
 </resources>

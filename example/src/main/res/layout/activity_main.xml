@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:res="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -7,6 +8,7 @@
     <nl.marijnvdwerf.scheduleview.widget.ScheduleView
             android:id="@+id/schedule"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            res:verticalSpacing="2dp"/>
 
 </RelativeLayout>
